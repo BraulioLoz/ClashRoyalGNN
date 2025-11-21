@@ -1,0 +1,97 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Data files (uncomment if you want to ignore data)
+# data/
+# *.csv
+# *.json
+# *.parquet
+# *.h5
+# *.hdf5
+
+# Model files (uncomment if you want to ignore trained models)
+# *.pkl
+# *.joblib
+# *.h5
+# *.pt
+# *.pth
+# models/
+# checkpoints/
+
+# Data files - NO subir datos grandes a GitHub
+data/01-raw/*.json
+data/02-preprocessed/*.json
+data/03-features/*.json
+# Mantén la estructura de directorios
+!data/01-raw/.gitkeep
+!data/02-preprocessed/.gitkeep
+!data/03-features/.gitkeep
+!data/04-predictions/.gitkeep
+
+# Model files - NO subir modelos entrenados
+models/*.pt
+models/*.pth
+!models/.gitkeep
+
+# Test token file
+test_token.py
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
