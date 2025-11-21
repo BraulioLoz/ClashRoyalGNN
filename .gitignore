@@ -99,3 +99,6 @@ Thumbs.db
 # Config with sensitive API token
 config/config.yaml
 !config/config.yaml.example
+
+# ignorar Flujo_de_github.md
+Flujo_de_github.md
