@@ -95,3 +95,7 @@ Thumbs.db
 *.tmp
 *.temp
 .cache/
+
+# Config with sensitive API token
+config/config.yaml
+!config/config.yaml.example
