@@ -1,13 +1,11 @@
 import os
 import json
-import numpy as np
 import torch
 from torch_geometric.data import Data
 from typing import List, Dict, Tuple, Optional
-from collections import defaultdict
 
-from ..data_collection.cr_api import CRApiClient
 from ..utils import get_card_id_to_index_mapping, load_config
+from ..data_collection.data_fetcher import extract_decks_from_battle_logs
 
 
 def encode_rarity(rarity: str) -> int:
@@ -44,107 +42,102 @@ def extract_node_features(
         normalization_params_dict contains mean/std or min/max for each feature
     """
     num_nodes = len(id_to_index)
-    feature_vectors = []
     
-    # Create a mapping from card ID to card data
+    # OPTIMIZACIÓN 1: Combinar items y supportItems en un solo loop
     card_data_map = {}
+    for item_list in [cards_data.get("items", []), cards_data.get("supportItems", [])]:
+        for item in item_list:
+            card_id = item.get("id")
+            if card_id is not None:
+                card_data_map[card_id] = item
     
-    # Process items
-    for item in cards_data.get("items", []):
-        card_id = item.get("id")
-        if card_id is not None:
-            card_data_map[card_id] = item
+    # OPTIMIZACIÓN 2: Pre-allocar tensor en lugar de lista de listas
+    feature_tensor = torch.zeros((num_nodes, len(node_features)), dtype=torch.float32)
     
-    # Process supportItems
-    for item in cards_data.get("supportItems", []):
-        card_id = item.get("id")
-        if card_id is not None:
-            card_data_map[card_id] = item
+    # OPTIMIZACIÓN 3: Crear mapeo de feature name a función extractora
+    feature_extractors = {
+        "id": lambda card_id, card_data: float(card_id),
+        "elixirCost": lambda card_id, card_data: float(card_data.get("elixirCost", 0)),
+        "rarity": lambda card_id, card_data: float(encode_rarity(card_data.get("rarity", "COMMON"))),
+        "maxLevel": lambda card_id, card_data: float(card_data.get("maxLevel", 1)),
+        "maxEvolutionLevel": lambda card_id, card_data: float(card_data.get("maxEvolutionLevel", 0)),
+    }
     
-    # Extract features for each card
-    for card_id, index in sorted(id_to_index.items(), key=lambda x: x[1]):
+    # OPTIMIZACIÓN 4: Iterar por índice en lugar de ordenar
+    # Crear reverse mapping: index -> card_id
+    index_to_card_id = {idx: card_id for card_id, idx in id_to_index.items()}
+    
+    # Verificar que tenemos mapeo completo y consecutivo
+    if len(index_to_card_id) != num_nodes:
+        raise ValueError(f"Mismatch between num_nodes ({num_nodes}) and id_to_index mapping ({len(index_to_card_id)})")
+    
+    # Verificar que los índices son consecutivos desde 0
+    expected_indices = set(range(num_nodes))
+    actual_indices = set(index_to_card_id.keys())
+    if expected_indices != actual_indices:
+        missing = expected_indices - actual_indices
+        extra = actual_indices - expected_indices
+        raise ValueError(f"Non-consecutive indices: missing {missing}, extra {extra}")
+    
+    for idx in range(num_nodes):
+        card_id = index_to_card_id[idx]
         card_data = card_data_map.get(card_id, {})
-        features = []
         
-        for feat_name in node_features:
-            if feat_name == "id":
-                features.append(float(card_id))
-            elif feat_name == "elixirCost":
-                features.append(float(card_data.get("elixirCost", 0)))
-            elif feat_name == "rarity":
-                rarity = card_data.get("rarity", "COMMON")
-                features.append(float(encode_rarity(rarity)))
-            elif feat_name == "maxLevel":
-                features.append(float(card_data.get("maxLevel", 1)))
-            elif feat_name == "maxEvolutionLevel":
-                features.append(float(card_data.get("maxEvolutionLevel", 0)))
+        for feat_idx, feat_name in enumerate(node_features):
+            extractor = feature_extractors.get(feat_name)
+            if extractor:
+                feature_tensor[idx, feat_idx] = extractor(card_id, card_data)
             else:
-                # Default to 0 for unknown features
-                features.append(0.0)
-        
-        feature_vectors.append(features)
+                feature_tensor[idx, feat_idx] = 0.0
     
-    # Convert to tensor
-    feature_tensor = torch.tensor(feature_vectors, dtype=torch.float32)
-    
-    # Normalize features if requested
+    # OPTIMIZACIÓN 5: Normalización vectorizada
     normalization_params = None
     
     if normalize and feature_tensor.size(0) > 0:
         normalization_params = {}
-        normalized_features = []
         
-        # Normalize each feature column separately
-        for feat_idx, feat_name in enumerate(node_features):
-            feat_col = feature_tensor[:, feat_idx]
+        if normalization_method == "standard":
+            # Vectorized: compute mean and std for all features at once
+            mean = feature_tensor.mean(dim=0, keepdim=True)
+            std = feature_tensor.std(dim=0, keepdim=True)
             
-            if normalization_method == "standard":
-                # StandardScaler: zero mean, unit variance
-                mean = feat_col.mean().item()
-                std = feat_col.std().item()
-                
-                if std > 1e-8:  # Avoid division by zero
-                    normalized_col = (feat_col - mean) / std
-                else:
-                    normalized_col = feat_col - mean
-                
+            # Avoid division by zero
+            std = torch.clamp(std, min=1e-8)
+            feature_tensor = (feature_tensor - mean) / std
+            
+            # Store params
+            for feat_idx, feat_name in enumerate(node_features):
                 normalization_params[feat_name] = {
                     "method": "standard",
-                    "mean": mean,
-                    "std": std
+                    "mean": mean[0, feat_idx].item(),
+                    "std": std[0, feat_idx].item()
                 }
-            elif normalization_method == "minmax":
-                # MinMaxScaler: scale to [0, 1]
-                min_val = feat_col.min().item()
-                max_val = feat_col.max().item()
                 
-                if max_val - min_val > 1e-8:  # Avoid division by zero
-                    normalized_col = (feat_col - min_val) / (max_val - min_val)
-                else:
-                    normalized_col = torch.zeros_like(feat_col)
-                
+        elif normalization_method == "minmax":
+            # Vectorized: compute min and max for all features at once
+            min_vals = feature_tensor.min(dim=0, keepdim=True)[0]
+            max_vals = feature_tensor.max(dim=0, keepdim=True)[0]
+            
+            # Avoid division by zero
+            ranges = max_vals - min_vals
+            ranges = torch.clamp(ranges, min=1e-8)
+            feature_tensor = (feature_tensor - min_vals) / ranges
+            
+            # Store params
+            for feat_idx, feat_name in enumerate(node_features):
                 normalization_params[feat_name] = {
                     "method": "minmax",
-                    "min": min_val,
-                    "max": max_val
+                    "min": min_vals[0, feat_idx].item(),
+                    "max": max_vals[0, feat_idx].item()
                 }
-            else:
-                # No normalization
-                normalized_col = feat_col
-                normalization_params[feat_name] = {"method": "none"}
-            
-            normalized_features.append(normalized_col.unsqueeze(1))
         
-        # Stack normalized features
-        feature_tensor = torch.cat(normalized_features, dim=1)
-        
-        print(f"Normalized features using {normalization_method} method")
-        print(f"Feature ranges after normalization:")
-        for feat_idx, feat_name in enumerate(node_features):
-            feat_col = feature_tensor[:, feat_idx]
-            print(f"  {feat_name}: mean={feat_col.mean().item():.4f}, "
-                  f"std={feat_col.std().item():.4f}, "
-                  f"min={feat_col.min().item():.4f}, max={feat_col.max().item():.4f}")
+        # OPTIMIZACIÓN 6: Reducir prints en producción (opcional)
+        if __debug__:  # Solo en modo debug
+            print(f"Normalized features using {normalization_method} method")
+            for feat_idx, feat_name in enumerate(node_features):
+                feat_col = feature_tensor[:, feat_idx]
+                print(f"  {feat_name}: mean={feat_col.mean().item():.4f}, "
+                      f"std={feat_col.std().item():.4f}")
     
     return feature_tensor, normalization_params
 
@@ -160,38 +153,47 @@ def build_graph_from_co_occurrence(
     Args:
         co_occurrence_data: Dictionary with edge_list from co-occurrence matrix
         id_to_index: Mapping from card ID to node index
-        edge_threshold: Minimum weight for edges (already filtered in co_occurrence)
+        edge_threshold: Minimum weight for edges (applies additional filtering if needed)
         
     Returns:
         Tuple of (edge_index, edge_weights)
     """
     edge_list = co_occurrence_data.get("edge_list", [])
     
-    edges = []
-    edge_weights = []
+    if not edge_list:
+        return torch.empty((2, 0), dtype=torch.long), torch.empty((0,), dtype=torch.float32)
+    
+    # OPTIMIZACIÓN: Pre-filtrar y usar list comprehensions más eficientes
+    valid_edges = []
+    valid_weights = []
     
     for edge in edge_list:
         source_id = edge.get("source")
         target_id = edge.get("target")
         weight = edge.get("weight", 1)
         
+        # Apply edge_threshold filter (defense in depth)
+        if weight < edge_threshold:
+            continue
+        
         if source_id in id_to_index and target_id in id_to_index:
             source_idx = id_to_index[source_id]
             target_idx = id_to_index[target_id]
             
+            # Skip self-loops
+            if source_idx == target_idx:
+                continue
+            
             # Add both directions for undirected graph
-            edges.append([source_idx, target_idx])
-            edges.append([target_idx, source_idx])
-            edge_weights.append(weight)
-            edge_weights.append(weight)
+            valid_edges.extend([(source_idx, target_idx), (target_idx, source_idx)])
+            valid_weights.extend([weight, weight])
     
-    if not edges:
-        # Create empty graph if no edges
-        edge_index = torch.empty((2, 0), dtype=torch.long)
-        edge_attr = torch.empty((0,), dtype=torch.float32)
-    else:
-        edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
-        edge_attr = torch.tensor(edge_weights, dtype=torch.float32)
+    if not valid_edges:
+        return torch.empty((2, 0), dtype=torch.long), torch.empty((0,), dtype=torch.float32)
+    
+    # OPTIMIZACIÓN: Crear tensor directamente desde lista de tuples
+    edge_index = torch.tensor(valid_edges, dtype=torch.long).t().contiguous()
+    edge_attr = torch.tensor(valid_weights, dtype=torch.float32)
     
     return edge_index, edge_attr
 
@@ -278,10 +280,15 @@ def create_pyg_data(
     
     # Create binary indicator for input cards
     input_cards = torch.zeros(num_nodes, dtype=torch.long)
+    
+    # OPTIMIZACIÓN: Más explícito y seguro - evitar KeyError
+    indices = []
     for card_id in input_card_ids:
         if card_id in id_to_index:
-            idx = id_to_index[card_id]
-            input_cards[idx] = 1
+            indices.append(id_to_index[card_id])
+    
+    if indices:
+        input_cards[indices] = 1
     
     data = Data(
         x=node_features,
@@ -329,6 +336,13 @@ def process_features(
     
     os.makedirs(output_dir, exist_ok=True)
     
+    # OPTIMIZACIÓN: Validar archivos antes de procesar
+    if not os.path.exists(cards_data_path):
+        raise FileNotFoundError(f"Cards data not found: {cards_data_path}")
+    
+    if not os.path.exists(co_occurrence_path):
+        raise FileNotFoundError(f"Co-occurrence matrix not found: {co_occurrence_path}")
+    
     # Load cards data
     print("Loading cards data...")
     with open(cards_data_path, "r", encoding="utf-8") as f:
@@ -373,7 +387,6 @@ def process_features(
     else:
         # Extract decks from battle logs
         print("Extracting decks from battle logs...")
-        from ..data_collection.data_fetcher import extract_decks_from_battle_logs
         
         battle_logs_path = os.path.join(config["data"]["raw_dir"], "battle_logs.json")
         if os.path.exists(battle_logs_path):
@@ -392,10 +405,11 @@ def process_features(
     print("Saving processed features...")
     
     # Save graph structure
+    # OPTIMIZACIÓN: Usar .cpu().tolist() en lugar de .numpy().tolist() para mejor compatibilidad
     graph_data = {
-        "node_features": node_features.numpy().tolist(),
-        "edge_index": edge_index.numpy().tolist(),
-        "edge_attr": edge_attr.numpy().tolist(),
+        "node_features": node_features.cpu().tolist(),
+        "edge_index": edge_index.cpu().tolist(),
+        "edge_attr": edge_attr.cpu().tolist(),
         "id_to_index": {str(k): v for k, v in id_to_index.items()},
         "index_to_id": {str(k): v for k, v in index_to_id.items()},
         "num_nodes": num_cards,

@@ -66,6 +66,8 @@ data/03-features/*.json
 models/*.pt
 models/*.pth
 !models/.gitkeep
+models/*.csv
+models/*.json
 
 # Test token file
 test_token.py
@@ -102,3 +104,8 @@ config/config.yaml
 
 # ignorar Flujo_de_github.md
 Flujo_de_github.md
+
+# Ignorar resultados esperados
+Resultados_esperados.md
+
+

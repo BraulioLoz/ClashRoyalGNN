@@ -26,6 +26,9 @@ training:
   gradient_clip_norm: 1.0  # Gradient clipping max norm
   log_gradients_every_n_epochs: 5  # Log gradient stats every N epochs
   compute_metrics: true  # Compute top-k accuracy metrics
+  # Save training history incrementally for visualization
+  save_history_every_n_epochs: 5  # Save every N epochs (0 = only at end)
+  save_history_format: "both"  # "json", "csv", or "both"
   lr_scheduler:
     type: "reduce_on_plateau"  # Options: "reduce_on_plateau", "cosine", "step"
     patience: 5  # For reduce_on_plateau

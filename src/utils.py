@@ -2,6 +2,7 @@ import os
 import yaml
 import torch
 import json
+import logging
 from typing import Dict, List, Optional, Tuple
 from pathlib import Path
 
@@ -181,4 +182,52 @@ def load_model(path: str, model_class: torch.nn.Module = None) -> Dict:
 def ensure_dir(path: str):
     """Ensure directory exists, create if it doesn't."""
     os.makedirs(path, exist_ok=True)
+
+
+def setup_training_logger(log_dir: str = "models", log_file: str = "training_errors.log") -> logging.Logger:
+    """
+    Setup logger for training that writes to both console and file.
+    
+    The logger is thread-safe and can be used with DataLoader multiprocessing.
+    File handler captures all levels (DEBUG and above), console handler only shows
+    WARNING and above to avoid saturating stdout.
+    
+    Args:
+        log_dir: Directory to save log file
+        log_file: Name of log file
+        
+    Returns:
+        Logger instance configured for training
+    """
+    os.makedirs(log_dir, exist_ok=True)
+    log_path = os.path.join(log_dir, log_file)
+    
+    # Create logger with unique name to avoid conflicts
+    logger = logging.getLogger('training')
+    logger.setLevel(logging.DEBUG)
+    
+    # Remove existing handlers to avoid duplicates when called multiple times
+    logger.handlers = []
+    
+    # File handler (captures everything from DEBUG and above)
+    file_handler = logging.FileHandler(log_path, mode='a', encoding='utf-8')
+    file_handler.setLevel(logging.DEBUG)
+    file_formatter = logging.Formatter(
+        '%(asctime)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    file_handler.setFormatter(file_formatter)
+    logger.addHandler(file_handler)
+    
+    # Console handler (only warnings and above to avoid saturating stdout)
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.WARNING)
+    console_formatter = logging.Formatter('%(levelname)s: %(message)s')
+    console_handler.setFormatter(console_formatter)
+    logger.addHandler(console_handler)
+    
+    # Prevent propagation to root logger
+    logger.propagate = False
+    
+    return logger
 
