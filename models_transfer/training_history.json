@@ -1,0 +1,622 @@
+[
+  {
+    "stage": "Stage 1: Adapter Training",
+    "epoch": 1,
+    "train_loss": 4.101774262431452,
+    "val_loss": 4.14093961527473,
+    "lr": 0.01,
+    "train_metrics": {
+      "top_1_acc": 0.11654876076265787,
+      "top_2_acc": 0.2055745257895339,
+      "top_5_acc": 0.3939287989935792,
+      "mean_target_prob": 0.023315514801940322,
+      "min_target_prob": 0.015427771075459791,
+      "max_target_prob": 0.0312032585305799,
+      "logits_mean": -0.5419891878451017,
+      "logits_std": 1.1806507863538303,
+      "logits_min": -3.333022649775828,
+      "logits_max": 1.8636735778556304
+    },
+    "val_metrics": {
+      "top_1_acc": 0.11811260137650025,
+      "top_2_acc": 0.20370636402815687,
+      "top_5_acc": 0.3832521450679761,
+      "mean_target_prob": 0.019307615229371012,
+      "min_target_prob": 0.014250599487038187,
+      "max_target_prob": 0.024364630981158184,
+      "logits_mean": -0.40828612668752357,
+      "logits_std": 0.8624980204971389,
+      "logits_min": -2.595562084719006,
+      "logits_max": 1.3729395247314051
+    }
+  },
+  {
+    "stage": "Stage 1: Adapter Training",
+    "epoch": 2,
+    "train_loss": 4.083183225999242,
+    "val_loss": 4.109873574031027,
+    "lr": 0.01,
+    "train_metrics": {
+      "top_1_acc": 0.12003529008119987,
+      "top_2_acc": 0.20813305667652393,
+      "top_5_acc": 0.3977649615240087,
+      "mean_target_prob": 0.023825596278530512,
+      "min_target_prob": 0.01571508318968768,
+      "max_target_prob": 0.03193610936913157,
+      "logits_mean": -0.5768668359457967,
+      "logits_std": 1.2128584132916782,
+      "logits_min": -3.687516906001356,
+      "logits_max": 1.877695138270541
+    },
+    "val_metrics": {
+      "top_1_acc": 0.12128612660145485,
+      "top_2_acc": 0.2163090465058573,
+      "top_5_acc": 0.407647803998903,
+      "mean_target_prob": 0.01979703725735474,
+      "min_target_prob": 0.01476765276631395,
+      "max_target_prob": 0.02482642174460604,
+      "logits_mean": -0.420103298289933,
+      "logits_std": 0.8838965433522045,
+      "logits_min": -2.6689512537685607,
+      "logits_max": 1.322509301804635
+    }
+  },
+  {
+    "stage": "Stage 1: Adapter Training",
+    "epoch": 3,
+    "train_loss": 4.03903491077233,
+    "val_loss": 4.079101731902675,
+    "lr": 0.01,
+    "train_metrics": {
+      "top_1_acc": 0.13234760729981865,
+      "top_2_acc": 0.2233535379940203,
+      "top_5_acc": 0.4247226624405705,
+      "mean_target_prob": 0.025675798037663046,
+      "min_target_prob": 0.016823224197708448,
+      "max_target_prob": 0.03452837187104543,
+      "logits_mean": -0.6104050223843371,
+      "logits_std": 1.2610461652542806,
+      "logits_min": -3.919871788817047,
+      "logits_max": 1.931709305231632
+    },
+    "val_metrics": {
+      "top_1_acc": 0.13117237596479084,
+      "top_2_acc": 0.20452912982721919,
+      "top_5_acc": 0.3842446879366862,
+      "mean_target_prob": 0.024362595915601717,
+      "min_target_prob": 0.016940747821441764,
+      "max_target_prob": 0.03178444400085883,
+      "logits_mean": -0.48332434977385785,
+      "logits_std": 1.0122444550659233,
+      "logits_min": -2.6981084155279125,
+      "logits_max": 1.7044506640499715
+    }
+  },
+  {
+    "stage": "Stage 1: Adapter Training",
+    "epoch": 4,
+    "train_loss": 4.023584981297338,
+    "val_loss": 4.0691037679973405,
+    "lr": 0.01,
+    "train_metrics": {
+      "top_1_acc": 0.13726207786691064,
+      "top_2_acc": 0.23036254023232636,
+      "top_5_acc": 0.43306157792409367,
+      "mean_target_prob": 0.02661445110648224,
+      "min_target_prob": 0.017369581437972993,
+      "max_target_prob": 0.03585932077645856,
+      "logits_mean": -0.6245107079957665,
+      "logits_std": 1.27056475936678,
+      "logits_min": -3.829987104467218,
+      "logits_max": 1.9714072832508944
+    },
+    "val_metrics": {
+      "top_1_acc": 0.14440192762272924,
+      "top_2_acc": 0.2299695707252093,
+      "top_5_acc": 0.4141907510676366,
+      "mean_target_prob": 0.02276810194692279,
+      "min_target_prob": 0.016465603147534588,
+      "max_target_prob": 0.029070600734263295,
+      "logits_mean": -0.4439049985252133,
+      "logits_std": 0.9606098508989278,
+      "logits_min": -2.793042453331023,
+      "logits_max": 1.5155982119331735
+    }
+  },
+  {
+    "stage": "Stage 1: Adapter Training",
+    "epoch": 5,
+    "train_loss": 4.0099747402723445,
+    "val_loss": 4.045461996605522,
+    "lr": 0.01,
+    "train_metrics": {
+      "top_1_acc": 0.1420491120296698,
+      "top_2_acc": 0.23761334487885372,
+      "top_5_acc": 0.43612331922819286,
+      "mean_target_prob": 0.027285335531006982,
+      "min_target_prob": 0.017767542227728597,
+      "max_target_prob": 0.036803128835659525,
+      "logits_mean": -0.6380626981301669,
+      "logits_std": 1.2911089654012204,
+      "logits_min": -3.9062650488301993,
+      "logits_max": 1.9948574866845294
+    },
+    "val_metrics": {
+      "top_1_acc": 0.1416724347337765,
+      "top_2_acc": 0.22959083726214885,
+      "top_5_acc": 0.4060545114991315,
+      "mean_target_prob": 0.025281385040934943,
+      "min_target_prob": 0.017608905488734613,
+      "max_target_prob": 0.03295386455864519,
+      "logits_mean": -0.47173999996734933,
+      "logits_std": 1.0147603962286937,
+      "logits_min": -2.859289675342666,
+      "logits_max": 1.6913663739205043
+    }
+  },
+  {
+    "stage": "Stage 2: Partial Fine-tuning",
+    "epoch": 1,
+    "train_loss": 4.097489826702993,
+    "val_loss": 3.884374144830202,
+    "lr": 0.005,
+    "train_metrics": {
+      "top_1_acc": 0.1545117388533991,
+      "top_2_acc": 0.2530658258042381,
+      "top_5_acc": 0.44302449066283267,
+      "mean_target_prob": 0.032094976532548836,
+      "min_target_prob": 0.020815419953275623,
+      "max_target_prob": 0.04337453311529776,
+      "logits_mean": -0.6406631103009052,
+      "logits_std": 1.4454776191091296,
+      "logits_min": -4.3456988522299325,
+      "logits_max": 2.399999266066381
+    },
+    "val_metrics": {
+      "top_1_acc": 0.19455146204176516,
+      "top_2_acc": 0.2931135808595944,
+      "top_5_acc": 0.4792414882919121,
+      "mean_target_prob": 0.038997047778820654,
+      "min_target_prob": 0.028247371999227517,
+      "max_target_prob": 0.04974672360475001,
+      "logits_mean": -0.5690974180905705,
+      "logits_std": 1.2120519043349294,
+      "logits_min": -3.652795265284215,
+      "logits_max": 2.1069849924704234
+    }
+  },
+  {
+    "stage": "Stage 2: Partial Fine-tuning",
+    "epoch": 2,
+    "train_loss": 3.871159914720098,
+    "val_loss": 3.7920037727606926,
+    "lr": 0.005,
+    "train_metrics": {
+      "top_1_acc": 0.18618131913016486,
+      "top_2_acc": 0.29053539627820346,
+      "top_5_acc": 0.4814776087702387,
+      "mean_target_prob": 0.04106078070097589,
+      "min_target_prob": 0.026844313820554657,
+      "max_target_prob": 0.055277247579910614,
+      "logits_mean": -0.6928036388684097,
+      "logits_std": 1.4336612862524916,
+      "logits_min": -4.312210313209682,
+      "logits_max": 2.4081208861425165
+    },
+    "val_metrics": {
+      "top_1_acc": 0.221598255214115,
+      "top_2_acc": 0.3193245484582936,
+      "top_5_acc": 0.5025401261574225,
+      "mean_target_prob": 0.05077712537113945,
+      "min_target_prob": 0.03407914499271171,
+      "max_target_prob": 0.06747510593950111,
+      "logits_mean": -0.6819439507712719,
+      "logits_std": 1.4308144978090962,
+      "logits_min": -4.210900105756375,
+      "logits_max": 2.5165565315758025
+    }
+  },
+  {
+    "stage": "Stage 2: Partial Fine-tuning",
+    "epoch": 3,
+    "train_loss": 3.817227432498108,
+    "val_loss": 3.740114070867237,
+    "lr": 0.005,
+    "train_metrics": {
+      "top_1_acc": 0.2036760501249857,
+      "top_2_acc": 0.3106638129625696,
+      "top_5_acc": 0.500612675020831,
+      "mean_target_prob": 0.045313923185682344,
+      "min_target_prob": 0.02942198151926363,
+      "max_target_prob": 0.061205864859185895,
+      "logits_mean": -0.7188867222601173,
+      "logits_std": 1.4760150876329505,
+      "logits_min": -4.468228083848661,
+      "logits_max": 2.5190359660659727
+    },
+    "val_metrics": {
+      "top_1_acc": 0.23429235611393348,
+      "top_2_acc": 0.331026106489402,
+      "top_5_acc": 0.5148163142704157,
+      "mean_target_prob": 0.05729754700687427,
+      "min_target_prob": 0.03850544447820425,
+      "max_target_prob": 0.07608964971958049,
+      "logits_mean": -0.7148306986880398,
+      "logits_std": 1.4884787938939223,
+      "logits_min": -4.448070750807126,
+      "logits_max": 2.6958344389640625
+    }
+  },
+  {
+    "stage": "Stage 2: Partial Fine-tuning",
+    "epoch": 4,
+    "train_loss": 3.776126505924618,
+    "val_loss": 3.705001859288467,
+    "lr": 0.005,
+    "train_metrics": {
+      "top_1_acc": 0.21492966490760862,
+      "top_2_acc": 0.322963059780744,
+      "top_5_acc": 0.5114905157906775,
+      "mean_target_prob": 0.04845747748218376,
+      "min_target_prob": 0.03158876800668229,
+      "max_target_prob": 0.06532618697091476,
+      "logits_mean": -0.7468728013901597,
+      "logits_std": 1.5101855626705278,
+      "logits_min": -4.550993867378323,
+      "logits_max": 2.602000779628964
+    },
+    "val_metrics": {
+      "top_1_acc": 0.2420759817685547,
+      "top_2_acc": 0.33896644943908266,
+      "top_5_acc": 0.521254783142443,
+      "mean_target_prob": 0.0630435493349359,
+      "min_target_prob": 0.0422839603945581,
+      "max_target_prob": 0.08380313845732305,
+      "logits_mean": -0.752347721588778,
+      "logits_std": 1.5516425469757344,
+      "logits_min": -4.6346320144479805,
+      "logits_max": 2.8617348756196814
+    }
+  },
+  {
+    "stage": "Stage 2: Partial Fine-tuning",
+    "epoch": 5,
+    "train_loss": 3.7488520684036306,
+    "val_loss": 3.6828261551104093,
+    "lr": 0.005,
+    "train_metrics": {
+      "top_1_acc": 0.22283072197624454,
+      "top_2_acc": 0.3314326792687111,
+      "top_5_acc": 0.5186334896335386,
+      "mean_target_prob": 0.051083112035265554,
+      "min_target_prob": 0.0333398539396028,
+      "max_target_prob": 0.06882637013640819,
+      "logits_mean": -0.767619817216066,
+      "logits_std": 1.526923022553078,
+      "logits_min": -4.604951952237897,
+      "logits_max": 2.6546518467812095
+    },
+    "val_metrics": {
+      "top_1_acc": 0.2524062634678925,
+      "top_2_acc": 0.35373705449843934,
+      "top_5_acc": 0.5281503441250605,
+      "mean_target_prob": 0.06646015408315246,
+      "min_target_prob": 0.04381423208888581,
+      "max_target_prob": 0.08910607559015306,
+      "logits_mean": -0.7750659575284362,
+      "logits_std": 1.5747170098168457,
+      "logits_min": -4.691395087943392,
+      "logits_max": 2.9447495965619743
+    }
+  },
+  {
+    "stage": "Stage 2: Partial Fine-tuning",
+    "epoch": 6,
+    "train_loss": 3.7267427990998936,
+    "val_loss": 3.6862090920147144,
+    "lr": 0.005,
+    "train_metrics": {
+      "top_1_acc": 0.22962406260721813,
+      "top_2_acc": 0.3379940202917967,
+      "top_5_acc": 0.5241067198196284,
+      "mean_target_prob": 0.053064978563455344,
+      "min_target_prob": 0.034697796870014036,
+      "max_target_prob": 0.07143216026167235,
+      "logits_mean": -0.7824159444972593,
+      "logits_std": 1.5343921676646461,
+      "logits_min": -4.62620659325118,
+      "logits_max": 2.6873027186432923
+    },
+    "val_metrics": {
+      "top_1_acc": 0.24783534236199084,
+      "top_2_acc": 0.3486568021835943,
+      "top_5_acc": 0.5282940016455316,
+      "mean_target_prob": 0.063440740589363,
+      "min_target_prob": 0.042318745640098236,
+      "max_target_prob": 0.08456273542016503,
+      "logits_mean": -0.766364082666225,
+      "logits_std": 1.564515010492548,
+      "logits_min": -4.74968999608606,
+      "logits_max": 2.858151002050799
+    }
+  },
+  {
+    "stage": "Stage 2: Partial Fine-tuning",
+    "epoch": 7,
+    "train_loss": 3.7074348942385957,
+    "val_loss": 3.669225529620522,
+    "lr": 0.005,
+    "train_metrics": {
+      "top_1_acc": 0.23483588478442008,
+      "top_2_acc": 0.3431306876664434,
+      "top_5_acc": 0.5279330795497247,
+      "mean_target_prob": 0.0548590167168715,
+      "min_target_prob": 0.035841721171853545,
+      "max_target_prob": 0.07387631226920144,
+      "logits_mean": -0.7954651685634915,
+      "logits_std": 1.5455206611248509,
+      "logits_min": -4.60074927602235,
+      "logits_max": 2.7177470892830886
+    },
+    "val_metrics": {
+      "top_1_acc": 0.25492679996343265,
+      "top_2_acc": 0.354664298494208,
+      "top_5_acc": 0.5298611745961265,
+      "mean_target_prob": 0.06878794404567613,
+      "min_target_prob": 0.045446841451490874,
+      "max_target_prob": 0.09212904680855925,
+      "logits_mean": -0.7923064532468471,
+      "logits_std": 1.5998063641039055,
+      "logits_min": -4.713652173566507,
+      "logits_max": 2.9971536332795505
+    }
+  },
+  {
+    "stage": "Stage 2: Partial Fine-tuning",
+    "epoch": 8,
+    "train_loss": 3.695526088987078,
+    "val_loss": 3.648099952622464,
+    "lr": 0.005,
+    "train_metrics": {
+      "top_1_acc": 0.23790416128874148,
+      "top_2_acc": 0.3461042037675429,
+      "top_5_acc": 0.5309360040518242,
+      "mean_target_prob": 0.05607541074168152,
+      "min_target_prob": 0.03661382825875532,
+      "max_target_prob": 0.07553699323361644,
+      "logits_mean": -0.8135271217510355,
+      "logits_std": 1.559848912106152,
+      "logits_min": -4.647083574361388,
+      "logits_max": 2.733950159333798
+    },
+    "val_metrics": {
+      "top_1_acc": 0.264382076765355,
+      "top_2_acc": 0.35889566546081414,
+      "top_5_acc": 0.5410795209674681,
+      "mean_target_prob": 0.07113299848071125,
+      "min_target_prob": 0.04807267653413926,
+      "max_target_prob": 0.09419332033497665,
+      "logits_mean": -0.8014985023738059,
+      "logits_std": 1.5687447092242324,
+      "logits_min": -4.581250757934503,
+      "logits_max": 2.9573091388556723
+    }
+  },
+  {
+    "stage": "Stage 2: Partial Fine-tuning",
+    "epoch": 9,
+    "train_loss": 3.6827209859195342,
+    "val_loss": 3.6617148455820585,
+    "lr": 0.005,
+    "train_metrics": {
+      "top_1_acc": 0.241341676605617,
+      "top_2_acc": 0.3498096622935285,
+      "top_5_acc": 0.5337363373470355,
+      "mean_target_prob": 0.05729103938300418,
+      "min_target_prob": 0.03747148104517913,
+      "max_target_prob": 0.0771105977436311,
+      "logits_mean": -0.8234341207143382,
+      "logits_std": 1.5622865146653977,
+      "logits_min": -4.636920300935759,
+      "logits_max": 2.7485353173962945
+    },
+    "val_metrics": {
+      "top_1_acc": 0.2565984511107338,
+      "top_2_acc": 0.3555131838424469,
+      "top_5_acc": 0.5310365543090726,
+      "mean_target_prob": 0.07030832039190607,
+      "min_target_prob": 0.046695282673636644,
+      "max_target_prob": 0.0939213582738225,
+      "logits_mean": -0.7988519500073826,
+      "logits_std": 1.5681184258884273,
+      "logits_min": -4.703707586839189,
+      "logits_max": 2.9546367441214034
+    }
+  },
+  {
+    "stage": "Stage 2: Partial Fine-tuning",
+    "epoch": 10,
+    "train_loss": 3.6733582217827982,
+    "val_loss": 3.6509640028602197,
+    "lr": 0.005,
+    "train_metrics": {
+      "top_1_acc": 0.24431846030682766,
+      "top_2_acc": 0.3532145016092931,
+      "top_5_acc": 0.5371411766628,
+      "mean_target_prob": 0.058260000315142564,
+      "min_target_prob": 0.03811428770067795,
+      "max_target_prob": 0.07840571293374099,
+      "logits_mean": -0.8400172917951583,
+      "logits_std": 1.5731993784284273,
+      "logits_min": -4.734061284861209,
+      "logits_max": 2.7609507443108017
+    },
+    "val_metrics": {
+      "top_1_acc": 0.25812644473756385,
+      "top_2_acc": 0.3610505282678821,
+      "top_5_acc": 0.5333350746366118,
+      "mean_target_prob": 0.0714332893118273,
+      "min_target_prob": 0.049060625427185325,
+      "max_target_prob": 0.09380595329514799,
+      "logits_mean": -0.8401469902821089,
+      "logits_std": 1.6119310880557063,
+      "logits_min": -4.791895971920209,
+      "logits_max": 2.9783204835248758
+    }
+  },
+  {
+    "stage": "Stage 3: Full Fine-tuning",
+    "epoch": 1,
+    "train_loss": 3.641211611883981,
+    "val_loss": 3.6190680485022697,
+    "lr": 0.001,
+    "train_metrics": {
+      "top_1_acc": 0.25257895338768444,
+      "top_2_acc": 0.3610207982747071,
+      "top_5_acc": 0.5442906857058833,
+      "mean_target_prob": 0.061162583868400414,
+      "min_target_prob": 0.040370866516835635,
+      "max_target_prob": 0.08195430123001966,
+      "logits_mean": -0.8862402851121501,
+      "logits_std": 1.6125384246159549,
+      "logits_min": -4.904487557336171,
+      "logits_max": 2.7841721965905655
+    },
+    "val_metrics": {
+      "top_1_acc": 0.2706768881169111,
+      "top_2_acc": 0.37362709119640597,
+      "top_5_acc": 0.5448276762743075,
+      "mean_target_prob": 0.07540161371023117,
+      "min_target_prob": 0.05161486377270335,
+      "max_target_prob": 0.09918836396449533,
+      "logits_mean": -0.8944767354596344,
+      "logits_std": 1.6746158532589965,
+      "logits_min": -5.038904142772709,
+      "logits_max": 3.0667163273830806
+    }
+  },
+  {
+    "stage": "Stage 3: Full Fine-tuning",
+    "epoch": 2,
+    "train_loss": 3.6343860135125956,
+    "val_loss": 3.6217353971380937,
+    "lr": 0.001,
+    "train_metrics": {
+      "top_1_acc": 0.254921822667342,
+      "top_2_acc": 0.3652098616171353,
+      "top_5_acc": 0.5467577237897626,
+      "mean_target_prob": 0.061898532442443054,
+      "min_target_prob": 0.04086610361241534,
+      "max_target_prob": 0.08293096126647004,
+      "logits_mean": -0.8981928488124826,
+      "logits_std": 1.6167024464624145,
+      "logits_min": -4.91578837681454,
+      "logits_max": 2.790236385339912
+    },
+    "val_metrics": {
+      "top_1_acc": 0.2669679121338366,
+      "top_2_acc": 0.37293492314322657,
+      "top_5_acc": 0.5451149913152499,
+      "mean_target_prob": 0.07282557305021918,
+      "min_target_prob": 0.049720988352913276,
+      "max_target_prob": 0.09593015760165342,
+      "logits_mean": -0.8768913223904541,
+      "logits_std": 1.632317551490467,
+      "logits_min": -4.960211096384288,
+      "logits_max": 2.987179434767613
+    }
+  },
+  {
+    "stage": "Stage 3: Full Fine-tuning",
+    "epoch": 3,
+    "train_loss": 3.631148935552451,
+    "val_loss": 3.6125557861830058,
+    "lr": 0.001,
+    "train_metrics": {
+      "top_1_acc": 0.25631382031466987,
+      "top_2_acc": 0.3664809580603526,
+      "top_5_acc": 0.5473197510088715,
+      "mean_target_prob": 0.062352548996259735,
+      "min_target_prob": 0.04115769435951266,
+      "max_target_prob": 0.08354740364003066,
+      "logits_mean": -0.9030582367710699,
+      "logits_std": 1.6145466696262274,
+      "logits_min": -4.9300788525515875,
+      "logits_max": 2.7929837030997273
+    },
+    "val_metrics": {
+      "top_1_acc": 0.2742944456778676,
+      "top_2_acc": 0.37458045474135115,
+      "top_5_acc": 0.5490590432409137,
+      "mean_target_prob": 0.07589613670401381,
+      "min_target_prob": 0.05186511825367808,
+      "max_target_prob": 0.09992715532681545,
+      "logits_mean": -0.8912285830783678,
+      "logits_std": 1.6527560511672672,
+      "logits_min": -4.999103175543065,
+      "logits_max": 3.046439131534035
+    }
+  },
+  {
+    "stage": "Stage 3: Full Fine-tuning",
+    "epoch": 4,
+    "train_loss": 3.626806913420211,
+    "val_loss": 3.616993988815107,
+    "lr": 0.001,
+    "train_metrics": {
+      "top_1_acc": 0.25720914274511086,
+      "top_2_acc": 0.3668371264724623,
+      "top_5_acc": 0.5485941150521999,
+      "mean_target_prob": 0.06291211179540997,
+      "min_target_prob": 0.041459420346662335,
+      "max_target_prob": 0.0843648032456207,
+      "logits_mean": -0.9090119230388273,
+      "logits_std": 1.6162361353557395,
+      "logits_min": -4.928724339766081,
+      "logits_max": 2.799176255243477
+    },
+    "val_metrics": {
+      "top_1_acc": 0.2696974050227893,
+      "top_2_acc": 0.37518120437241254,
+      "top_5_acc": 0.5482362774418513,
+      "mean_target_prob": 0.07352766221771541,
+      "min_target_prob": 0.050757505000756126,
+      "max_target_prob": 0.09629781940882456,
+      "logits_mean": -0.8820659039445433,
+      "logits_std": 1.6256489479803795,
+      "logits_min": -4.92315706180017,
+      "logits_max": 2.977825976659209
+    }
+  },
+  {
+    "stage": "Stage 3: Full Fine-tuning",
+    "epoch": 5,
+    "train_loss": 3.622675086968761,
+    "val_loss": 3.6152575047392594,
+    "lr": 0.001,
+    "train_metrics": {
+      "top_1_acc": 0.25816328197755156,
+      "top_2_acc": 0.3682814057215678,
+      "top_5_acc": 0.5495841978858628,
+      "mean_target_prob": 0.06313937013497344,
+      "min_target_prob": 0.04162749254703594,
+      "max_target_prob": 0.0846512477328559,
+      "logits_mean": -0.9144707282382938,
+      "logits_std": 1.615809716732257,
+      "logits_min": -4.922877026805553,
+      "logits_max": 2.7969497240154313
+    },
+    "val_metrics": {
+      "top_1_acc": 0.2688485196745504,
+      "top_2_acc": 0.3728565644956968,
+      "top_5_acc": 0.5462773112536078,
+      "mean_target_prob": 0.07411091196599608,
+      "min_target_prob": 0.051192097037850805,
+      "max_target_prob": 0.09702972734232153,
+      "logits_mean": -0.8742140451770997,
+      "logits_std": 1.6179071893604335,
+      "logits_min": -4.882184593723386,
+      "logits_max": 2.992765877636255
+    }
+  }
+]

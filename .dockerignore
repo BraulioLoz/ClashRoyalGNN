@@ -1,0 +1,60 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentation
+*.md
+docs/
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/
+
+# Model checkpoints (large files - mount as volume instead)
+models/*.pt
+models_history/
+
+# Logs
+*.log
+logs/
+
+# Tests
+tests/
+test_*.py
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+

@@ -1,0 +1,77 @@
+# Docker Compose for AMD ROCm GPUs (Strix Halo, Radeon, etc.)
+
+services:
+  clash-royale-gnn-amd:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: clash-royale-gnn:amd
+    container_name: clash-royale-gnn-amd
+    
+    # AMD GPU support
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    
+    # Shared memory size for DataLoader workers
+    shm_size: '8gb'
+    
+    # Security options for ROCm
+    security_opt:
+      - seccomp:unconfined
+    
+    # Group IDs for GPU access (using GIDs for compatibility)
+    group_add:
+      - "39"    # video group
+      - "105"   # render group
+    
+    # Mount volumes for persistence
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./models_transfer:/app/models_transfer
+      - ./config:/app/config
+      - ./logs:/app/logs
+      - ./entrypoint:/app/entrypoint
+      - ./src:/app/src
+      - ./process_features.py:/app/process_features.py
+    
+    # Environment variables for AMD Strix Halo (gfx1151)
+    environment:
+      - HSA_OVERRIDE_GFX_VERSION=11.0.0
+      - ROCR_VISIBLE_DEVICES=0
+      - HIP_VISIBLE_DEVICES=0
+      - PYTORCH_ROCM_ARCH=gfx1100
+      - GPU_MAX_HW_QUEUES=8
+    
+    # Keep container running
+    stdin_open: true
+    tty: true
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Override command - Transfer Learning by default
+    command: python entrypoint/train_transfer_learning.py
+    
+  # Transfer learning for AMD
+  clash-royale-gnn-amd-transfer:
+    extends: clash-royale-gnn-amd
+    container_name: clash-royale-gnn-amd-transfer
+    command: python entrypoint/train_transfer_learning.py
+    profiles:
+      - transfer
+  
+  # Inference for AMD
+  clash-royale-gnn-amd-inference:
+    extends: clash-royale-gnn-amd
+    container_name: clash-royale-gnn-amd-inference
+    command: python entrypoint/inference.py
+    profiles:
+      - inference
+
+networks:
+  default:
+    name: clash-royale-network-amd
+
+
