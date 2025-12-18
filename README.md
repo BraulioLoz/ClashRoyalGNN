@@ -387,9 +387,7 @@ El modelo se guarda en `models_transfer/best_model.pt` con historial de entrenam
 Generar recomendaciones de cartas:
 
 ```bash
-python entrypoint/inference.py \
-  --cards "Hog Rider,mini PEKKA,Giant Snowball,Skeletons,Electro Spirit,Cannon" \
-  --model models_transfer/best_model.pt
+python entrypoint/inference.py --cards "Hog Rider,Musketeer,Fireball,Skeletons,Ice Spirit,Cannon" --model models_transfer/best_model.pt
 ```
 
 **Salida:** Top 2 cartas recomendadas con probabilidades.
