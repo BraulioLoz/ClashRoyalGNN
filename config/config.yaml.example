@@ -44,6 +44,14 @@ training:
     stage3_epochs: 10  # Full fine-tuning epochs
     stage2_lr_factor: 0.5  # LR multiplier for stage 2 (base_lr * 0.5)
     stage3_lr_factor: 0.1  # LR multiplier for stage 3 (base_lr * 0.1)
+  margin_weights:
+    3: 1.0    # 3-crown win
+    2: 0.8    # 2-crown win
+    1: 0.6    # 1-crown win
+    0: 0.0    # Draw (skip)
+    -1: 0.2   # 1-crown loss
+    -2: 0.1   # 2-crown loss
+    -3: 0.05  # 3-crown loss
 
 model:
   input_dim: 90  # 6 cards * 15 features per card
